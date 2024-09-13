@@ -5,19 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d744b7d-2bc7-4609-990e-186824651fa8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/PriceRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/PriceStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinDatabaseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/Repository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/entity/PriceEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/price_history/daily_history.csv" beforeDir="false" afterPath="$PROJECT_DIR$/price_history/daily_history.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/price_history/mtgox_history.csv" beforeDir="false" afterPath="$PROJECT_DIR$/price_history/mtgox_history.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/price_history/new_price.csv" beforeDir="false" afterPath="$PROJECT_DIR$/price_history/new_price.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/PriceRecord.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/PriceStore.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +42,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2lwbV2F3PVcPfjVSGv7Ro6Khf9C" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -54,20 +54,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.bitcoin-info [:org.bitcoin.Main.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "/home/philip/coding/java/bitcoin-info/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "editor.preferences.import"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.bitcoin-info [:org.bitcoin.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/philip/coding/java/bitcoin-info/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

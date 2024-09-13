@@ -1,7 +1,7 @@
 package org.bitcoin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bitcoin.storage.PriceStore;
+import org.bitcoin.storage.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,12 +12,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         try {
             Config config = loadConfig();
-            PriceStore store = new PriceStore();
+            Repository store = new Repository();
 
             PriceLoader priceLoader = new PriceLoader(store);
-            priceLoader.loadPriceFiles(config.getPriceHistoryPath());
+            int numAdded = priceLoader.loadPriceFiles(config.getPriceHistoryPath());
 
-            System.out.printf("Loaded %s records", store.size());
+            System.out.printf("Loaded %s records", numAdded);
         } catch (Throwable e) {
             e.printStackTrace();
         }

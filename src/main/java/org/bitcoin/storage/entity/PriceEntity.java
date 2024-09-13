@@ -1,12 +1,22 @@
-package org.bitcoin.storage;
+package org.bitcoin.storage.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class PriceRecord {
+@Entity
+@Table(name = "price")
+public class PriceEntity implements Serializable {
     private static final DateFormat DATE_STRING_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Id
+    private final String dateStr;
 
     private Date date;
     private String open;
@@ -14,21 +24,24 @@ public class PriceRecord {
     private String low;
     private String close;
 
-    public PriceRecord(Date date, String open, String high, String low, String close) {
+    public PriceEntity(Date date, String open, String high, String low, String close) {
         this.date = date;
         this.open = open;
         this.high = high;
         this.low = low;
         this.close = close;
+
+        // Set primary key
+        this.dateStr = DATE_STRING_FORMAT.format(date);
     }
 
     @Override
     public String toString() {
-        return String.join(", ", List.of(getDateString(), open, high, low, close));
+        return String.join(", ", List.of(getDateStr(), open, high, low, close));
     }
 
-    public String getDateString() {
-        return DATE_STRING_FORMAT.format(date);
+    public String getDateStr() {
+        return dateStr;
     }
 
     public Date getDate() {

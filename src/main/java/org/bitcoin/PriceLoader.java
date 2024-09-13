@@ -1,7 +1,8 @@
 package org.bitcoin;
 
-import org.bitcoin.storage.PriceRecord;
-import org.bitcoin.storage.PriceStore;
+import org.bitcoin.exception.BitcoinDatabaseException;
+import org.bitcoin.storage.Repository;
+import org.bitcoin.storage.entity.PriceEntity;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class PriceLoader {
@@ -32,20 +34,22 @@ public class PriceLoader {
     private final Date MIN_DATE;
     private final Date MAX_DATE;
 
-    private final PriceStore store;
+    private final Repository store;
+    private final AtomicInteger numAdded = new AtomicInteger(0);
 
-    public PriceLoader(PriceStore store) throws Exception {
+    public PriceLoader(Repository store) throws Exception {
         this.store = store;
 
         MIN_DATE = TIMESTAMP_FORMAT.parse("2009-01-01");
         MAX_DATE = TIMESTAMP_FORMAT.parse("2026-01-01");
     }
 
-    public void loadPriceFiles(String basePath) throws IOException {
+    public int loadPriceFiles(String basePath) throws IOException {
         // Load all the price files from the base path
         try (Stream<Path> stream = Files.list(Path.of(basePath))) {
             stream.forEach(this::importPriceFile);
         }
+        return numAdded.get();
     }
 
     private void importPriceFile(Path priceFile) {
@@ -56,10 +60,12 @@ public class PriceLoader {
             // Read the remainder of the file
             br.lines().forEach(line -> {
                 try {
-                    store.addRecord(processLine(headerMap, line));
-                } catch (Exception e) {
+                    store.create(processLine(headerMap, line));
+                    numAdded.incrementAndGet();
+                } catch (ParseException | NumberFormatException e) {
                     System.out.println("Skipping Bad Line: " + line);
-                    e.printStackTrace();
+                } catch (BitcoinDatabaseException e) {
+                    // Skip duplicate line
                 }
             });
         } catch (Exception e) {
@@ -90,7 +96,7 @@ public class PriceLoader {
         return headerMap;
     }
 
-    private PriceRecord processLine(Map<String, Integer> headerMap, String line) throws ParseException {
+    private PriceEntity processLine(Map<String, Integer> headerMap, String line) throws ParseException {
         // Split the line by comma
         String[] splitLine = line.split(",");
 
@@ -105,7 +111,7 @@ public class PriceLoader {
         String close = splitLine[headerMap.get(CLOSE)];
         validatePricing(open, high, low, close);
 
-        return new PriceRecord(date, open, high, low, close);
+        return new PriceEntity(date, open, high, low, close);
     }
 
     private void validatePricing(String openStr, String highStr, String lowStr, String closeStr) {
