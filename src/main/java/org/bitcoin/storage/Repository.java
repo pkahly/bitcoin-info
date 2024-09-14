@@ -1,16 +1,17 @@
 package org.bitcoin.storage;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.bitcoin.bll.model.Transformer;
 import org.bitcoin.exception.BitcoinDatabaseException;
 import org.bitcoin.storage.entity.PriceEntity;
-import org.hibernate.NonUniqueObjectException;
 
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 public class Repository {
     private static final Logger LOGGER = Logger.getLogger(Repository.class.getName());
     private static final String DATE_STR = "dateStr";
+    private static final String DATE = "date";
 
     private final EntityManager em;
 
@@ -28,19 +30,20 @@ public class Repository {
 
     public void create(PriceEntity price) throws BitcoinDatabaseException {
         LOGGER.info("Creating price record " + price.getDateStr());
-        try {
+        try (Transaction ignored = getTransaction()) {
+            if (getPrice(price.getDateStr()).isPresent()) {
+                throw new BitcoinDatabaseException("Already exists");
+            }
             em.persist(price);
-        } catch (NonUniqueObjectException | EntityExistsException e) {
-            throw new BitcoinDatabaseException(e);
         }
     }
 
-    public Optional<PriceEntity> findById(String id) {
-        LOGGER.info("Getting price record by id " + id);
-        return Optional.ofNullable(em.find(PriceEntity.class, id));
+    public Optional<PriceEntity> getPrice(String dateStr) {
+        LOGGER.info("Getting price record: " + dateStr);
+        return Optional.ofNullable(em.find(PriceEntity.class, dateStr));
     }
 
-    public List<PriceEntity> getPriceRange(String startDateStr, String endDateStr) {
+    public List<PriceEntity> getPriceRange(String startDateStr, String endDateStr) throws ParseException {
         LOGGER.info(String.format("Loading Price Range: %s - %s", startDateStr, endDateStr));
 
         // Create Query
@@ -48,10 +51,16 @@ public class Repository {
         CriteriaQuery<PriceEntity> query = criteriaBuilder.createQuery(PriceEntity.class);
         Root<PriceEntity> root = query.from(PriceEntity.class);
 
+        // Convert strings to dates
+        LocalDate startDate = Transformer.strToDate(startDateStr);
+        LocalDate endDate = Transformer.strToDate(endDateStr);
+        LOGGER.info("Start Date: " + startDate);
+        LOGGER.info("End Date: " + endDate);
+
         // Where the date is within the range
         query.where(
-                criteriaBuilder.greaterThanOrEqualTo(root.get(DATE_STR), startDateStr),
-                criteriaBuilder.lessThanOrEqualTo(root.get(DATE_STR), endDateStr)
+                criteriaBuilder.greaterThanOrEqualTo(root.get(DATE), startDate),
+                criteriaBuilder.lessThanOrEqualTo(root.get(DATE), endDate)
         );
 
         // Sort by date
@@ -61,13 +70,22 @@ public class Repository {
         return em.createQuery(query).getResultList();
     }
 
-    public void delete(String id) {
-        LOGGER.info("Deleting price record by id " + id);
-        findById(id).ifPresent(em::remove);
+    public void delete(String dateStr) {
+        LOGGER.info("Deleting price record: " + dateStr);
+        try (Transaction ignored = getTransaction()) {
+            getPrice(dateStr).ifPresent(em::remove);
+        }
     }
 
     public void update(PriceEntity price) {
         LOGGER.info("Updating price record " + price.getDateStr());
-        em.merge(price);
+        try (Transaction ignored = getTransaction()) {
+            em.merge(price);
+        }
+    }
+
+    private Transaction getTransaction() {
+        // Return a transaction that auto-commits
+        return new Transaction(em.getTransaction());
     }
 }

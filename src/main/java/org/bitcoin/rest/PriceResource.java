@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import org.bitcoin.bll.BusinessLogicLayer;
 import org.bitcoin.bll.model.Price;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -29,7 +30,7 @@ public class PriceResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPrice(@PathParam("dateStr") String dateStr) {
         LOGGER.info("GET request for price: " + dateStr);
-        Optional<Price> price = bll.findById(dateStr);
+        Optional<Price> price = bll.getPrice(dateStr);
 
         if (price.isPresent()) {
             return Response.ok()
@@ -43,7 +44,7 @@ public class PriceResource {
     @GET
     @Path("{startDateStr}/{endDateStr}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPriceRange(@PathParam("startDateStr") String startDateStr, @PathParam("endDateStr") String endDateStr) {
+    public Response getPriceRange(@PathParam("startDateStr") String startDateStr, @PathParam("endDateStr") String endDateStr) throws ParseException {
         LOGGER.info(String.format("GET request for price range: %s - %s", startDateStr, endDateStr));
         List<Price> prices = bll.getPriceRange(startDateStr, endDateStr);
 

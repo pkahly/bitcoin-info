@@ -3,7 +3,6 @@ package org.bitcoin;
 import org.bitcoin.bll.BusinessLogicLayer;
 import org.bitcoin.bll.model.Price;
 import org.bitcoin.exception.BitcoinDatabaseException;
-import org.bitcoin.storage.entity.PriceEntity;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,6 +12,7 @@ import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -104,8 +104,7 @@ public class PriceLoader {
         String[] splitLine = line.split(",");
 
         // Get the date
-        Date date = getDate(headerMap, splitLine);
-        //System.out.println(TIMESTAMP_FORMAT.format(date));
+        LocalDate date = getDate(headerMap, splitLine);
 
         // Get the price data
         String open = splitLine[headerMap.get(OPEN)];
@@ -131,7 +130,7 @@ public class PriceLoader {
         }
     }
 
-    private Date getDate(Map<String, Integer> headerMap, String[] splitLine) throws ParseException {
+    private LocalDate getDate(Map<String, Integer> headerMap, String[] splitLine) throws ParseException {
         // Parse the date from one of two formats
         Date date;
         if (headerMap.containsKey(DATE)) {
@@ -155,6 +154,7 @@ public class PriceLoader {
             throw new IllegalArgumentException("Bad Date: " + date);
         }
 
-        return date;
+        // Convert the Date object into a LocalDate
+        return LocalDate.parse(TIMESTAMP_FORMAT.format(date));
     }
 }

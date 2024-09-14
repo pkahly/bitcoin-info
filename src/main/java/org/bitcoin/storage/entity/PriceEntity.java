@@ -1,11 +1,12 @@
 package org.bitcoin.storage.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -15,13 +16,22 @@ public class PriceEntity implements Serializable {
     @Id
     private final String dateStr;
 
-    private Date date;
+    @Column(nullable = false, unique = true)
+    private LocalDate date;
+
+    @Column(nullable = false)
     private String open;
+
+    @Column(nullable = false)
     private String high;
+
+    @Column(nullable = false)
     private String low;
+
+    @Column(nullable = false)
     private String close;
 
-    public PriceEntity(String dateStr, Date date, String open, String high, String low, String close) {
+    public PriceEntity(String dateStr, LocalDate date, String open, String high, String low, String close) {
         this.dateStr = dateStr;
         this.date = date;
         this.open = open;
@@ -39,11 +49,11 @@ public class PriceEntity implements Serializable {
         return dateStr;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

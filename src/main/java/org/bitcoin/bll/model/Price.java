@@ -1,15 +1,10 @@
 package org.bitcoin.bll.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 @SuppressWarnings("unused")
 public class Price {
-    private static final DateFormat DATE_STRING_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-
     private String dateStr;
-    private Date date;
     private String open;
     private String high;
     private String low;
@@ -17,13 +12,12 @@ public class Price {
 
     public Price() {}
 
-    public Price(Date date, String open, String high, String low, String close) {
-        this(DATE_STRING_FORMAT.format(date), date, open, high, low, close);
+    public Price(LocalDate date, String open, String high, String low, String close) {
+        this(Transformer.dateToStr(date), open, high, low, close);
     }
 
-    public Price(String dateStr, Date date, String open, String high, String low, String close) {
+    public Price(String dateStr, String open, String high, String low, String close) {
         this.dateStr = dateStr;
-        this.date = date;
         this.open = open;
         this.high = high;
         this.low = low;
@@ -36,14 +30,6 @@ public class Price {
 
     public void setDateStr(String dateStr) {
         this.dateStr = dateStr;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getOpen() {

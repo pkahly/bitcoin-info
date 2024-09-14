@@ -6,6 +6,7 @@ import org.bitcoin.exception.BitcoinDatabaseException;
 import org.bitcoin.storage.Repository;
 import org.bitcoin.storage.entity.PriceEntity;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +21,12 @@ public class BusinessLogicLayer {
         repository.create(Transformer.toEntity(price));
     }
 
-    public Optional<Price> findById(String id) {
-        Optional<PriceEntity> priceEntity = repository.findById(id);
+    public Optional<Price> getPrice(String dateStr) {
+        Optional<PriceEntity> priceEntity = repository.getPrice(dateStr);
         return priceEntity.map(Transformer::toModel);
     }
 
-    public List<Price> getPriceRange(String startDateStr, String endDateStr) {
+    public List<Price> getPriceRange(String startDateStr, String endDateStr) throws ParseException {
         List<PriceEntity> priceEntities = repository.getPriceRange(startDateStr, endDateStr);
         return priceEntities.stream().map(Transformer::toModel).toList();
     }
