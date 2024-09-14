@@ -1,5 +1,15 @@
 plugins {
     id 'java'
+    id "application"
+}
+
+apply plugin : "java" 
+ext {
+   javaMainClass = "org.bitcoin.Main"
+}
+
+application {
+    mainClassName = javaMainClass
 }
 
 group = 'org.bitcoin-info'

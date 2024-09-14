@@ -6,6 +6,7 @@ import org.bitcoin.exception.BitcoinDatabaseException;
 import org.bitcoin.storage.Repository;
 import org.bitcoin.storage.entity.PriceEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BusinessLogicLayer {
@@ -22,6 +23,11 @@ public class BusinessLogicLayer {
     public Optional<Price> findById(String id) {
         Optional<PriceEntity> priceEntity = repository.findById(id);
         return priceEntity.map(Transformer::toModel);
+    }
+
+    public List<Price> getPriceRange(String startDateStr, String endDateStr) {
+        List<PriceEntity> priceEntities = repository.getPriceRange(startDateStr, endDateStr);
+        return priceEntities.stream().map(Transformer::toModel).toList();
     }
 
     public void delete(String id) {

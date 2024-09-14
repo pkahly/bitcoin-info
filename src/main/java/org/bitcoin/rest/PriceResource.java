@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import org.bitcoin.bll.BusinessLogicLayer;
 import org.bitcoin.bll.model.Price;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -26,19 +27,28 @@ public class PriceResource {
     @GET
     @Path("{dateStr}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("dateStr") String dateStr) {
+    public Response getPrice(@PathParam("dateStr") String dateStr) {
         LOGGER.info("GET request for price: " + dateStr);
         Optional<Price> price = bll.findById(dateStr);
 
         if (price.isPresent()) {
             return Response.ok()
-                    .header("Access-Control-Allow-Origin", "*")
                     .entity(price.get())
                     .build();
         } else {
-            return Response.noContent()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .build();
+            return Response.noContent().build();
         }
+    }
+
+    @GET
+    @Path("{startDateStr}/{endDateStr}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPriceRange(@PathParam("startDateStr") String startDateStr, @PathParam("endDateStr") String endDateStr) {
+        LOGGER.info(String.format("GET request for price range: %s - %s", startDateStr, endDateStr));
+        List<Price> prices = bll.getPriceRange(startDateStr, endDateStr);
+
+        return Response.ok()
+                .entity(prices)
+                .build();
     }
 }

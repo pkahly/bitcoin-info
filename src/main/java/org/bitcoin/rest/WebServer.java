@@ -32,6 +32,9 @@ public class WebServer {
         // Register REST services
         config.register(new PriceResource(bll));
 
+        // Enable cross-origin requests
+        config.register(CorsFilter.class);
+
         return new ServletHolder(new ServletContainer(config));
     }
 }
