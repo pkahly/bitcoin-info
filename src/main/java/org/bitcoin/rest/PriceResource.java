@@ -31,9 +31,14 @@ public class PriceResource {
         Optional<Price> price = bll.findById(dateStr);
 
         if (price.isPresent()) {
-            return Response.ok().entity(price.get()).build();
+            return Response.ok()
+                    .header("Access-Control-Allow-Origin", "*")
+                    .entity(price.get())
+                    .build();
         } else {
-            return Response.noContent().build();
+            return Response.noContent()
+                    .header("Access-Control-Allow-Origin", "*")
+                    .build();
         }
     }
 }

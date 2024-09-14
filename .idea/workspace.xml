@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d744b7d-2bc7-4609-990e-186824651fa8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/BusinessLogicLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/model/Price.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/model/Transformer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/PriceResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/WebServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/Repository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/entity/PriceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/entity/PriceEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/PriceResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/PriceResource.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bitcoin Info</title>
+</head>
+<body>
+<main>
+    <p id="priceP">Empty</p>
+
+    <script>
+        const userAction = async () => {
+            const response = await fetch('http://localhost:8080/price/2022-11-13')
+            if (response.ok) {
+                const myJson = await response.json();
+                console.log(myJson);
+
+                var paragraph = document.getElementById("priceP");
+                paragraph.textContent = JSON.stringify(myJson);
+            }
+        }
+
+        userAction()
+    </script>
+</main>
+</body>
+</html>
