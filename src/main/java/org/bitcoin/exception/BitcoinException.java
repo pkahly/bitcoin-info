@@ -4,4 +4,8 @@ public class BitcoinException extends Exception {
     public BitcoinException(Exception cause) {
         super(cause);
     }
+
+    public BitcoinException(String message, Exception cause) {
+        super(message, cause);
+    }
 }

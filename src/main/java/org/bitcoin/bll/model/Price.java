@@ -1,27 +1,27 @@
-package org.bitcoin.storage.entity;
+package org.bitcoin.bll.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-@Entity
-@Table(name = "price")
 @SuppressWarnings("unused")
-public class PriceEntity implements Serializable {
-    @Id
-    private final String dateStr;
+public class Price {
+    private static final DateFormat DATE_STRING_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
+    private String dateStr;
     private Date date;
     private String open;
     private String high;
     private String low;
     private String close;
 
-    public PriceEntity(String dateStr, Date date, String open, String high, String low, String close) {
+    public Price() {}
+
+    public Price(Date date, String open, String high, String low, String close) {
+        this(DATE_STRING_FORMAT.format(date), date, open, high, low, close);
+    }
+
+    public Price(String dateStr, Date date, String open, String high, String low, String close) {
         this.dateStr = dateStr;
         this.date = date;
         this.open = open;
@@ -30,13 +30,12 @@ public class PriceEntity implements Serializable {
         this.close = close;
     }
 
-    @Override
-    public String toString() {
-        return String.join(", ", List.of(getDateStr(), open, high, low, close));
-    }
-
     public String getDateStr() {
         return dateStr;
+    }
+
+    public void setDateStr(String dateStr) {
+        this.dateStr = dateStr;
     }
 
     public Date getDate() {

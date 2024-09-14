@@ -1,25 +1,38 @@
 package org.bitcoin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bitcoin.bll.BusinessLogicLayer;
+import org.bitcoin.rest.WebServer;
 import org.bitcoin.storage.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private static final String CONFIG = "/config.json";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try {
+            // Load configuration
             Config config = loadConfig();
-            Repository store = new Repository();
 
-            PriceLoader priceLoader = new PriceLoader(store);
+            // Create database connection
+            Repository repository = new Repository();
+            BusinessLogicLayer bll = new BusinessLogicLayer(repository);
+
+            // Load price objects from CSV files
+            PriceLoader priceLoader = new PriceLoader(bll);
             int numAdded = priceLoader.loadPriceFiles(config.getPriceHistoryPath());
+            LOGGER.info(String.format("Loaded %s records", numAdded));
 
-            System.out.printf("Loaded %s records", numAdded);
+            // Start server
+            WebServer webServer = new WebServer(bll);
+            webServer.run();
         } catch (Throwable e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed", e);
         }
     }
 
