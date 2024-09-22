@@ -1,6 +1,6 @@
 package org.bitcoin.rest;
 
-import org.bitcoin.bll.BusinessLogicLayer;
+import org.bitcoin.bll.IBusinessLogicLayer;
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee10.servlet.ServletHolder;
 import org.eclipse.jetty.server.Server;
@@ -8,9 +8,9 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 public class WebServer {
-    private final BusinessLogicLayer bll;
+    private final IBusinessLogicLayer bll;
 
-    public WebServer(BusinessLogicLayer bll) {
+    public WebServer(IBusinessLogicLayer bll) {
         this.bll = bll;
     }
 

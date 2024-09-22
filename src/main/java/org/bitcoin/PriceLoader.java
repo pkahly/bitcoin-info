@@ -1,6 +1,6 @@
 package org.bitcoin;
 
-import org.bitcoin.bll.BusinessLogicLayer;
+import org.bitcoin.bll.IBusinessLogicLayer;
 import org.bitcoin.bll.model.Price;
 import org.bitcoin.exception.BitcoinDatabaseException;
 
@@ -37,10 +37,10 @@ public class PriceLoader {
     private final Date MIN_DATE;
     private final Date MAX_DATE;
 
-    private final BusinessLogicLayer bll;
+    private final IBusinessLogicLayer bll;
     private final AtomicInteger numAdded = new AtomicInteger(0);
 
-    public PriceLoader(BusinessLogicLayer bll) throws Exception {
+    public PriceLoader(IBusinessLogicLayer bll) throws Exception {
         this.bll = bll;
 
         MIN_DATE = TIMESTAMP_FORMAT.parse("2009-01-01");

@@ -5,20 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d744b7d-2bc7-4609-990e-186824651fa8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/Transaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/bitcoin/bll/model/TransformerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/bitcoin/storage/RepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/IBusinessLogicLayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/PriceRangeType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bitcoin/bll/BusinessLogicLayerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bitcoin/rest/PriceResourceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/testFixtures/java/org/bitcoin/FakeBusinessLogicLayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/PriceLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/BusinessLogicLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/BusinessLogicLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/model/Price.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/model/Price.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/model/Transformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/bll/model/Transformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinDatabaseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinDatabaseException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/exception/BitcoinException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/PriceResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/PriceResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/Repository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/entity/PriceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/storage/entity/PriceEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/WebServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bitcoin/rest/WebServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +31,28 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="bitcoin-info" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -59,6 +76,7 @@
   "keyToString": {
     "Downloaded.Files.Path.Enabled": "false",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.PriceResourceTest.executor": "Run",
     "Gradle.RepositoryTest.executor": "Run",
     "Gradle.TransformerTest.executor": "Run",
     "Gradle.bitcoin-info [:org.bitcoin.Main.main()].executor": "Run",
@@ -84,6 +102,9 @@
       <recent name="$PROJECT_DIR$/src/main" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.bitcoin.bll" />
     </key>
   </component>
   <component name="RunManager">

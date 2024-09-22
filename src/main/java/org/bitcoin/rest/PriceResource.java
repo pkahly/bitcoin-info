@@ -1,12 +1,10 @@
 package org.bitcoin.rest;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.bitcoin.bll.BusinessLogicLayer;
+import org.bitcoin.bll.IBusinessLogicLayer;
+import org.bitcoin.bll.PriceRangeType;
 import org.bitcoin.bll.model.Price;
 
 import java.text.ParseException;
@@ -19,9 +17,9 @@ import java.util.logging.Logger;
 public class PriceResource {
     private static final Logger LOGGER = Logger.getLogger(PriceResource.class.getName());
 
-    private final BusinessLogicLayer bll;
+    private final IBusinessLogicLayer bll;
 
-    public PriceResource(BusinessLogicLayer bll) {
+    public PriceResource(IBusinessLogicLayer bll) {
         this.bll = bll;
     }
 
@@ -44,9 +42,11 @@ public class PriceResource {
     @GET
     @Path("{startDateStr}/{endDateStr}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPriceRange(@PathParam("startDateStr") String startDateStr, @PathParam("endDateStr") String endDateStr) throws ParseException {
+    public Response getPriceRange(@PathParam("startDateStr") String startDateStr, @PathParam("endDateStr") String endDateStr, @QueryParam("rangeType") PriceRangeType rangeType) throws ParseException {
         LOGGER.info(String.format("GET request for price range: %s - %s", startDateStr, endDateStr));
-        List<Price> prices = bll.getPriceRange(startDateStr, endDateStr);
+        LOGGER.info("Price Range Type: " + rangeType);
+
+        List<Price> prices = bll.getPriceRange(startDateStr, endDateStr, rangeType);
 
         return Response.ok()
                 .entity(prices)
