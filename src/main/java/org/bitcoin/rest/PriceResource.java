@@ -43,6 +43,10 @@ public class PriceResource {
     @Path("{startDateStr}/{endDateStr}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPriceRange(@PathParam("startDateStr") String startDateStr, @PathParam("endDateStr") String endDateStr, @QueryParam("rangeType") PriceRangeType rangeType) throws ParseException {
+        if (rangeType == null) {
+            rangeType = PriceRangeType.DAY;
+        }
+
         LOGGER.info(String.format("GET request for price range: %s - %s", startDateStr, endDateStr));
         LOGGER.info("Price Range Type: " + rangeType);
 

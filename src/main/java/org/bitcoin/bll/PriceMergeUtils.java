@@ -13,6 +13,12 @@ public class PriceMergeUtils {
         // If rangeType is DAY, nothing to do
         if (PriceRangeType.DAY == rangeType) {
             return inputEntities;
+        } else if (rangeType == null) {
+            throw new IllegalArgumentException("PriceRangeType cannot be null");
+        }
+
+        if (inputEntities == null) {
+            throw new IllegalArgumentException("PriceEntity list cannot be null");
         }
 
         // Copy the list so that we can modify it

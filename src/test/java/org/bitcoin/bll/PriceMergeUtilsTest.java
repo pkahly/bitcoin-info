@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PriceMergeUtilsTest {
     private static final List<PriceEntity> INPUT_PRICES = Transformer.toEntity(List.of(
@@ -61,5 +62,16 @@ public class PriceMergeUtilsTest {
 
         assertEquals(expectedPrices.size(), resultPrices.size());
         assertEquals(expectedPrices, resultPrices);
+    }
+
+    @Test
+    public void testMergeNull() {
+        Exception e;
+
+        e = assertThrows(IllegalArgumentException.class, () -> PriceMergeUtils.mergePrices(INPUT_PRICES, null));
+        assertEquals("PriceRangeType cannot be null", e.getMessage());
+
+        e = assertThrows(IllegalArgumentException.class, () -> PriceMergeUtils.mergePrices(null, PriceRangeType.MONTH));
+        assertEquals("PriceEntity list cannot be null", e.getMessage());
     }
 }

@@ -121,6 +121,37 @@ public class BusinessLogicLayerTest {
     }
 
     @Test
+    public void testGetPriceRangeNull() {
+        BusinessLogicLayer bll = new BusinessLogicLayer(new FakeRepository());
+        Exception e;
+
+        // Range Type is null
+        e = assertThrows(IllegalArgumentException.class,
+                () -> bll.getPriceRange("2011-01-01", "2011-01-01", null));
+        assertEquals("PriceRangeType cannot be null", e.getMessage());
+
+        // Start Date is null
+        e = assertThrows(IllegalArgumentException.class,
+                () -> bll.getPriceRange(null, "2011-01-01", PriceRangeType.DAY));
+        assertEquals("Both dates are required", e.getMessage());
+
+        // Start Date is empty
+        e = assertThrows(IllegalArgumentException.class,
+                () -> bll.getPriceRange("", "2011-01-01", PriceRangeType.DAY));
+        assertEquals("Both dates are required", e.getMessage());
+
+        // End Date is null
+        e = assertThrows(IllegalArgumentException.class,
+                () -> bll.getPriceRange("2011-01-01", null, PriceRangeType.DAY));
+        assertEquals("Both dates are required", e.getMessage());
+
+        // End Date is empty
+        e = assertThrows(IllegalArgumentException.class,
+                () -> bll.getPriceRange("2011-01-01", "", PriceRangeType.DAY));
+        assertEquals("Both dates are required", e.getMessage());
+    }
+
+    @Test
     public void testUpdate() throws BitcoinDatabaseException {
         Price expectedPrice = new Price("2011-01-01", "2", "4", "1", "3");
         IRepository repository = new FakeRepository() {

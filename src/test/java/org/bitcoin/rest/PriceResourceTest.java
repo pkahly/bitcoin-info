@@ -77,6 +77,31 @@ public class PriceResourceTest {
         assertEquals(prices, response.getEntity());
     }
 
+    @Test
+    public void testGetPriceRangeNull() throws ParseException {
+        String expectedStartDateStr = "2011-01-01";
+        String expectedEndDateStr = "2013-01-05";
+        List<String> dateStrings = List.of(expectedStartDateStr, "2011-01-02", "2012-01-03", "2012-01-04", expectedEndDateStr);
+        List<Price> prices = createPrices(dateStrings);
+
+        FakeBusinessLogicLayer bll = new FakeBusinessLogicLayer() {
+            @Override
+            public List<Price> getPriceRange(String startDateStr, String endDateStr, PriceRangeType rangeType) {
+                assertEquals(expectedStartDateStr, startDateStr);
+                assertEquals(expectedEndDateStr, endDateStr);
+                assertEquals(PriceRangeType.DAY, rangeType);
+                return prices;
+            }
+        };
+
+        // Null PriceRangeType should be treated as "DAY"
+        PriceResource resource = new PriceResource(bll);
+        Response response = resource.getPriceRange(expectedStartDateStr, expectedEndDateStr, null);
+
+        assertEquals(Response.Status.OK, response.getStatusInfo());
+        assertEquals(prices, response.getEntity());
+    }
+
     private List<Price> createPrices(List<String> dateStrings) {
         List<Price> prices = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import org.bitcoin.bll.model.Transformer;
 import org.bitcoin.exception.BitcoinDatabaseException;
 import org.bitcoin.storage.IRepository;
 import org.bitcoin.storage.entity.PriceEntity;
+import org.eclipse.jetty.util.StringUtil;
 
 import java.text.ParseException;
 import java.util.List;
@@ -31,6 +32,13 @@ public class BusinessLogicLayer implements IBusinessLogicLayer {
 
     @Override
     public List<Price> getPriceRange(String startDateStr, String endDateStr, PriceRangeType rangeType) throws ParseException {
+        if (rangeType == null) {
+            throw new IllegalArgumentException("PriceRangeType cannot be null");
+        }
+        if (StringUtil.isBlank(startDateStr) || StringUtil.isBlank(endDateStr)) {
+            throw new IllegalArgumentException("Both dates are required");
+        }
+
         List<PriceEntity> priceEntities = repository.getPriceRange(startDateStr, endDateStr);
 
         // Merge prices according to the range type
