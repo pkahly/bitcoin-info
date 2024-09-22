@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bitcoin.bll.BusinessLogicLayer;
 import org.bitcoin.bll.IBusinessLogicLayer;
 import org.bitcoin.rest.WebServer;
+import org.bitcoin.storage.IRepository;
 import org.bitcoin.storage.Repository;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class Main {
             Config config = loadConfig();
 
             // Create database connection
-            Repository repository = new Repository();
+            IRepository repository = new Repository();
             IBusinessLogicLayer bll = new BusinessLogicLayer(repository);
 
             // Load price objects from CSV files

@@ -40,6 +40,15 @@ public class PriceEntity implements Serializable {
         this.close = close;
     }
 
+    public PriceEntity(PriceEntity other) {
+        this.dateStr = other.dateStr;
+        this.date = other.date;
+        this.open = other.open;
+        this.high = other.high;
+        this.low = other.low;
+        this.close = other.close;
+    }
+
     @Override
     public String toString() {
         return String.join(", ", List.of(getDateStr(), open, high, low, close));
@@ -87,5 +96,22 @@ public class PriceEntity implements Serializable {
 
     public void setClose(String close) {
         this.close = close;
+    }
+
+    @Override
+    public boolean equals(Object otherObj) {
+        if (!(otherObj instanceof PriceEntity other)) {
+            return false;
+        }
+        return dateStr.equals(other.dateStr)
+                && date.equals(other.date)
+                && compareNums(open, other.open)
+                && compareNums(high, other.high)
+                && compareNums(low, other.low)
+                && compareNums(close, other.close);
+    }
+
+    private boolean compareNums(String numStr1, String numStr2) {
+        return Double.parseDouble(numStr1) == Double.parseDouble(numStr2);
     }
 }

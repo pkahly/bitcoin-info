@@ -3,7 +3,7 @@ package org.bitcoin.bll;
 import org.bitcoin.bll.model.Price;
 import org.bitcoin.bll.model.Transformer;
 import org.bitcoin.exception.BitcoinDatabaseException;
-import org.bitcoin.storage.Repository;
+import org.bitcoin.storage.IRepository;
 import org.bitcoin.storage.entity.PriceEntity;
 
 import java.text.ParseException;
@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class BusinessLogicLayer implements IBusinessLogicLayer {
-    private final Repository repository;
+    private final IRepository repository;
 
-    public BusinessLogicLayer(Repository repository) {
+    public BusinessLogicLayer(IRepository repository) {
         this.repository = repository;
     }
 
@@ -30,13 +30,12 @@ public class BusinessLogicLayer implements IBusinessLogicLayer {
     }
 
     @Override
-    public List<Price> getPriceRange(String startDateStr, String endDateStr) throws ParseException {
-        return getPriceRange(startDateStr, endDateStr, PriceRangeType.DAY);
-    }
-
-    @Override
     public List<Price> getPriceRange(String startDateStr, String endDateStr, PriceRangeType rangeType) throws ParseException {
         List<PriceEntity> priceEntities = repository.getPriceRange(startDateStr, endDateStr);
+
+        // Merge prices according to the range type
+        priceEntities = PriceMergeUtils.mergePrices(priceEntities, rangeType);
+
         return priceEntities.stream().map(Transformer::toModel).toList();
     }
 

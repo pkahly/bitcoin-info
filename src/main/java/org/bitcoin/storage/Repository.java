@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-public class Repository {
+public class Repository implements IRepository {
     private static final Logger LOGGER = Logger.getLogger(Repository.class.getName());
     private static final String DATE_STR = "dateStr";
     private static final String DATE = "date";
@@ -28,6 +28,7 @@ public class Repository {
         em = emf.createEntityManager();
     }
 
+    @Override
     public void create(PriceEntity price) throws BitcoinDatabaseException {
         LOGGER.info("Creating price record " + price.getDateStr());
         try (Transaction ignored = getTransaction()) {
@@ -38,11 +39,13 @@ public class Repository {
         }
     }
 
+    @Override
     public Optional<PriceEntity> getPrice(String dateStr) {
         LOGGER.info("Getting price record: " + dateStr);
         return Optional.ofNullable(em.find(PriceEntity.class, dateStr));
     }
 
+    @Override
     public List<PriceEntity> getPriceRange(String startDateStr, String endDateStr) throws ParseException {
         LOGGER.info(String.format("Loading Price Range: %s - %s", startDateStr, endDateStr));
 
@@ -70,17 +73,19 @@ public class Repository {
         return em.createQuery(query).getResultList();
     }
 
+    @Override
+    public void update(PriceEntity price) {
+        Repository.LOGGER.info("Updating price record " + price.getDateStr());
+        try (Transaction ignored = getTransaction()) {
+            em.merge(price);
+        }
+    }
+
+    @Override
     public void delete(String dateStr) {
         LOGGER.info("Deleting price record: " + dateStr);
         try (Transaction ignored = getTransaction()) {
             getPrice(dateStr).ifPresent(em::remove);
-        }
-    }
-
-    public void update(PriceEntity price) {
-        LOGGER.info("Updating price record " + price.getDateStr());
-        try (Transaction ignored = getTransaction()) {
-            em.merge(price);
         }
     }
 

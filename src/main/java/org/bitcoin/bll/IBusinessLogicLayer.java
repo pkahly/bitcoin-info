@@ -13,8 +13,6 @@ public interface IBusinessLogicLayer {
 
     Optional<Price> getPrice(String dateStr);
 
-    List<Price> getPriceRange(String startDateStr, String endDateStr) throws ParseException;
-
     List<Price> getPriceRange(String startDateStr, String endDateStr, PriceRangeType rangeType) throws ParseException;
 
     void delete(String id);
